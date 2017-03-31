@@ -6,7 +6,7 @@ Created on Sun Mar 19 15:18:11 2017
 """
 
 from myData_manager import DataManager
-from classifier import Classifier
+from myclassifier import Classifier
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.cross_validation import cross_val_score
 
