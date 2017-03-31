@@ -8,8 +8,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
-#DataManager n'est pas importé ici car non nécessaire pour le calcul du score mais a bien été réalisé par le binôme Nicolas Dauprat/Maxime Delachaussée
-
+from myData_manager import DataManager
 from sklearn.cross_validation import cross_val_score
 from myPreprocessing import Preprocessor
 import pickle
