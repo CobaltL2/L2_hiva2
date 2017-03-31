@@ -26,7 +26,7 @@ class Preprocessor(BaseEstimator):
         self.transformer = self
         self.index = []
         
-    def fit(self, X, y):
+    """def fit(self, X, y):
         self.y_train= y    
         "Selection des hyperparametre"
         PCAPip = Pipeline([('pca',PCA()),('SKB',SelectKBest()), ('clf',self.classifier)])    
@@ -43,7 +43,7 @@ class Preprocessor(BaseEstimator):
         grid_search.fit(X,self.y_train)
         self.n_pca=grid_search.best_params_.get('pca__n_components')
         self.n_skb=grid_search.best_params_.get('SKB__k')
-        return self 
+        return self""" 
     
     def fit_transform(self, X, y): 
         return self.transform(X)
