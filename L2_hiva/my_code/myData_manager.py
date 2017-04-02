@@ -52,10 +52,11 @@ class DataManager(data_manager.DataManager):
         #affiche la description des données
         self.data.describe()
     
-    #affiche la variance des données sous forme d'une liste
+    #affiche la variance des données
     def afficheVariance(self):
         X_train = self.data.drop('target', axis=1).values     
         var_features = np.var(X_train, axis=0)
+        #affiche la variance des données sous forme d'une liste
         print var_features
         #affiche cette meme variance sous forme d'un plot de points où chaque point 
         #correspond à une feature
