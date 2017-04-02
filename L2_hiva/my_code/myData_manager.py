@@ -147,8 +147,10 @@ if __name__=="__main__":
     y_pred = classifier.fit(X_train, y_train).predict(X_test)
     #On initialise une instance de la classe
     D = DataManager(y_pred, y_test)
+    #On test l'affichage
+    iris.data.head()
+    iris.data.describe()
+    D.afficheTableau()
     #Teste creation et affichage de la matrice de confusion
     D.plot_confusion_matrix()
-    #On test l'affichage
-    D.affiche()
-
+    
