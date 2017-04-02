@@ -7,12 +7,17 @@ Created on Fri Mar 24 16:28:09 2017
 
 #Mettre le chemin vers le code
 codedir = '../sample_code'                        
-from sys import path; path.append(codedir)
+from sys import path
+from os.path import abspath
+path.append(abspath(codedir))
 
 #Mettre le chemin vers les données
 datadir = '../public_data'
 dataname = 'hiva'
 basename = datadir  + dataname
+
+#importe la classe data-manager présente dans le startingkit afin de créer un héritage
+import data_manager
 #Importe une classe possédant des méthodes nous permettant d'importer les
 #données sous le format Panda Data Frame
 import data_io
@@ -24,26 +29,31 @@ import itertools
 from sklearn import svm, datasets
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
-import data_manager
 
-
-class DataManager (data_manager.DataManager) :
-    
+#Notre classe datamanager hérite de celle du starting kit
+class DataManager(data_manager.DataManager):
+    #Constructeur : pour initier la classe ecrire DataManager(resultatClassifieur, label)
     #le self est présent pour la création d'attributs
-    def loadLabel2 (self, predictedLabel, label):
+    def __init__(self, predictedLabel, label):
+        ''' New contructor.'''
+        DataManager.__init__(self, basename, datadir)
         self.predictedLabel = predictedLabel
         self.label = label
         
     #charge les données    
-    def loadData2(self):    
+    def loadData(self):    
         reload(data_io)
         #Importe les données sous le format Panda Data Frame
         self.data = data_io.read_as_df(datadir)
-        #affiche les données
+    
+    #affiche les données
+    def afficheData(self):    
         self.data.head()
         #affiche la description des données
         self.data.describe()
-        #affiche la variance des données sous forme d'une liste
+    
+    #affiche la variance des données sous forme d'une liste
+    def afficheVariance(self):
         X_train = self.data.drop('target', axis=1).values     
         var_features = np.var(X_train, axis=0)
         print var_features
@@ -56,7 +66,7 @@ class DataManager (data_manager.DataManager) :
         plt.show()
     
     #Affiche tableau nbErreurs...    
-    def affiche(self): 
+    def afficheTableau(self): 
         #initilaisation
         label = self.label
         pL = self.predictedLabel
@@ -79,11 +89,11 @@ class DataManager (data_manager.DataManager) :
                     negAsNeg += 1
                     labelNeg += 1
          
-        nbErreurs = nbErreurs / float(len(label)) *100
-        posAsPos = posAsPos / float(len(label)) *100
-        posAsNeg = posAsNeg / float(len(label)) *100
-        negAsNeg = negAsNeg / float(len(label)) *100
-        negAsPos = negAsPos / float(len(label)) *100
+        nbErreurs = (nbErreurs * 100) / len(label)
+        posAsPos = posAsPos * 100 / len(label) 
+        posAsNeg = posAsNeg * 100 / len(label) 
+        negAsNeg = negAsNeg * 100 / len(label) 
+        negAsPos = negAsPos * 100 / len(label)
         
         #Création du tableau affichant nbErreurs...
         li = np.array([["NbErrors",nbErreurs],["Positive labeled as positive",posAsPos],
@@ -95,8 +105,8 @@ class DataManager (data_manager.DataManager) :
     #Creation matrice de confusion
     def plot_confusion_matrix(self) :
         #creation matrice de confusion
-        cm = confusion_matrix(self.label, self.predictedLabel)
-        classes = {"N e g a t i v e","P o s i t i v e"}
+        cm = confusion_matrix(self.label, self.predictedlabel)
+        classes = self.data.name
         title = 'Confusion matrix'
         cmap = plt.cm.Blues
         #creation de la heatmap
@@ -108,7 +118,7 @@ class DataManager (data_manager.DataManager) :
         plt.yticks(tick_marks, classes)
         #Normalisation de la matrice de confusion + modification de la heatmap
         cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-        print("\n Normalized confusion matrix")
+        print("Normalized confusion matrix")
         print(cm)
         thresh = cm.max() / 2.
         for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
@@ -120,7 +130,7 @@ class DataManager (data_manager.DataManager) :
         plt.ylabel('True label')
         plt.xlabel('Predicted label')
         plt.show()
-       
+        
 #test qui ne s'effectue que lorsque l'on execute la classe dans spyder par exemlpe
 if __name__=="__main__":
     #On va tester notre classe en utilisant les données d'Iris
