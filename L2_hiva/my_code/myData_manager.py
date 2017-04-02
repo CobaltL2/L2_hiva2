@@ -4,6 +4,7 @@ Created on Fri Mar 24 16:28:09 2017
 
 @author: nicolas.dauprat
 """
+#ATTENTION, avant d'executer ce code ou les tests correspondants, veuillez vérfifier que la VERSION DE SKLEARN utilisée est bien 0.18.1 ou plus.
 
 #Mettre le chemin vers le code
 codedir = '../sample_code'                        
