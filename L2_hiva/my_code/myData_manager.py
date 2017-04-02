@@ -35,7 +35,7 @@ from sklearn.metrics import confusion_matrix
 class DataManager(data_manager.DataManager):
     #Constructeur : pour initier la classe ecrire DataManager(resultatClassifieur, label)
     #le self est présent pour la création d'attributs
-    def __init__(self, predictedLabel, label):
+    def __init__(self, predictedLabel=[], label=[]):
         ''' New contructor.'''
         DataManager.__init__(self, basename, datadir)
         self.predictedLabel = predictedLabel
