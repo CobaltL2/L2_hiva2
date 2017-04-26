@@ -126,7 +126,7 @@ class DataManager(data_manager.DataManager):
         for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
             plt.text(j, i, cm[i, j],
             horizontalalignment="center",
-            color="white" if cm[i, j] > thresh else "black")
+            color="red" if cm[i, j] > thresh else "black")
         #Affichage de la heatmap
         plt.tight_layout()
         plt.ylabel('True label')
