@@ -14,7 +14,7 @@ class BestParams(GridSearchCV):
         pass
     
     def bestParamsRFC(self):
-        D = DataManager("Hiva","./public_data")
+        D = DataManager("hiva","../public_data")
         X = D.data['X_train']
         y = D.data['Y_train']
         param_grid = {
